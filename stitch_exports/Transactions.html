@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Transactions | Luminous Ledger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-fixed-variant": "#703700",
+                        "surface-variant": "#323538",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#23005c",
+                        "outline": "#908fa0",
+                        "on-secondary-container": "#c4abff",
+                        "on-secondary": "#3c0091",
+                        "error": "#ffb4ab",
+                        "surface-tint": "#c0c1ff",
+                        "surface-dim": "#111417",
+                        "primary-fixed": "#e1e0ff",
+                        "on-tertiary-container": "#452000",
+                        "on-primary": "#1000a9",
+                        "tertiary-fixed-dim": "#ffb783",
+                        "tertiary-fixed": "#ffdcc5",
+                        "surface": "#111417",
+                        "on-surface": "#e1e2e7",
+                        "on-tertiary": "#4f2500",
+                        "on-primary-container": "#0d0096",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#191c1f",
+                        "tertiary-container": "#d97721",
+                        "inverse-primary": "#494bd6",
+                        "outline-variant": "#464554",
+                        "surface-bright": "#37393d",
+                        "on-primary-fixed": "#07006c",
+                        "primary": "#c0c1ff",
+                        "secondary-fixed": "#e9ddff",
+                        "on-tertiary-fixed": "#301400",
+                        "tertiary": "#ffb783",
+                        "surface-container": "#1d2023",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "background": "#111417",
+                        "secondary": "#d0bcff",
+                        "on-surface-variant": "#c7c4d7",
+                        "inverse-on-surface": "#2e3134",
+                        "surface-container-lowest": "#0b0e11",
+                        "on-error": "#690005",
+                        "inverse-surface": "#e1e2e7",
+                        "primary-container": "#8083ff",
+                        "surface-container-high": "#272a2e",
+                        "on-background": "#e1e2e7",
+                        "surface-container-highest": "#323538",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "secondary-container": "#571bc1"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #111417;
+            color: #e1e2e7;
+            font-family: 'Inter', sans-serif;
+        }
+        .obsidian-gradient {
+            background: radial-gradient(circle at 50% -20%, #1d2023 0%, #111417 100%);
+        }
+        .glass-panel {
+            background: rgba(50, 53, 56, 0.4);
+            backdrop-filter: blur(32px);
+            border: 1px solid rgba(70, 69, 84, 0.15);
+        }
+        .primary-glow {
+            box-shadow: 0px 0px 20px rgba(192, 193, 255, 0.25);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #323538;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="obsidian-gradient min-h-screen overflow-hidden">
+<!-- SideNavBar (Authority: JSON) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-6 bg-[#191C1F] dark:bg-[#191C1F] shadow-2xl h-screen w-64 border-r-0 z-50">
+<div class="mb-10 px-2">
+<span class="text-xl font-bold text-[#C0C1FF] dark:text-[#C0C1FF] font-['Manrope'] tracking-tight">Luminous Ledger</span>
+<p class="text-[10px] uppercase tracking-[0.2em] text-outline mt-1 font-semibold">Premium Tier</p>
+</div>
+<nav class="flex-1 space-y-2">
+<!-- Dashboard -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-[#272A2E] hover:text-[#C0C1FF] text-[#9CA3AF]" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Manrope'] tracking-tight font-medium">Dashboard</span>
+</a>
+<!-- Accounts -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-[#272A2E] hover:text-[#C0C1FF] text-[#9CA3AF]" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-['Manrope'] tracking-tight font-medium">Accounts</span>
+</a>
+<!-- Transactions (ACTIVE) -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all scale-95 duration-200 text-[#C0C1FF] bg-[#C0C1FF]/10 font-bold" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-['Manrope'] tracking-tight">Transactions</span>
+</a>
+<!-- Budgets -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-[#272A2E] hover:text-[#C0C1FF] text-[#9CA3AF]" href="#">
+<span class="material-symbols-outlined">savings</span>
+<span class="font-['Manrope'] tracking-tight font-medium">Budgets</span>
+</a>
+<!-- Reports -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-[#272A2E] hover:text-[#C0C1FF] text-[#9CA3AF]" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="font-['Manrope'] tracking-tight font-medium">Reports</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-[#272A2E] hover:text-[#C0C1FF] text-[#9CA3AF]" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Manrope'] tracking-tight font-medium">Settings</span>
+</a>
+</nav>
+<div class="pt-6 mt-6 border-t border-outline-variant/10 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-[#272A2E] hover:text-[#C0C1FF] text-[#9CA3AF]" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-['Manrope'] tracking-tight font-medium">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-[#272A2E] hover:text-[#C0C1FF] text-[#9CA3AF]" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-['Manrope'] tracking-tight font-medium">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar (Authority: JSON) -->
+<header class="flex justify-between items-center px-8 ml-64 bg-transparent backdrop-blur-xl w-full h-20 z-40 fixed top-0">
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">search</span>
+<input class="bg-surface-container-lowest border-0 rounded-full pl-10 pr-6 py-2 text-sm w-80 focus:ring-1 focus:ring-primary transition-all placeholder:text-outline/50" placeholder="Search Obsidian..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#C0C1FF] opacity-80 hover:opacity-100 transition-all">notifications</button>
+<div class="h-8 w-px bg-outline-variant/20 mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="text-right">
+<p class="text-sm font-bold text-on-surface leading-none">Alexander Thorne</p>
+<p class="text-[10px] text-outline">Executive Account</p>
+</div>
+<img alt="User avatar" class="w-10 h-10 rounded-full border border-primary/20 group-hover:border-primary transition-all" data-alt="Professional portrait of a middle-aged man with sharp features and grey hair in a charcoal business suit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEfOOwyB-JBEXqUqSdhJpxyrMhfC0e9nKWdqRI2XeT0Daz3txyVfr0Nisf9312KeEUPo3DcLLEHvCG34STVDJFWZdlqpNcrJlaZ8aFf3QxSOqjpU0yfw7xx6OVZvjJwmMairn6RTBR0V-qUGOoyBLJUS6cMWRwBu9fbUbZnuvhtWNIFa2cg_zDDO5Ihu9nKbSYaIbFmQk2w0ur9rPVaP62VrEDvw3DtJgVyR3h98pwwl8AElN5q7F2RLzWbYHoVwET_WLWMC-3gdrT"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-64 pt-24 p-8 h-screen overflow-y-auto custom-scrollbar">
+<!-- Animated Background Mesh (Visual Detail) -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden opacity-30 z-0">
+<div class="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[-10%] left-[-5%] w-[30%] h-[40%] bg-secondary/10 blur-[100px] rounded-full"></div>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto space-y-8">
+<!-- Glassmorphic Container -->
+<section class="glass-panel rounded-2xl p-8 overflow-hidden">
+<!-- Table Header Row -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+<div>
+<h1 class="text-3xl font-black text-on-surface font-headline tracking-[-0.03em]">Transactions</h1>
+<p class="text-on-surface-variant text-sm mt-1">Monitoring 124 activities across 4 accounts.</p>
+</div>
+<div class="flex flex-wrap items-center gap-4">
+<!-- Filter Dropdown -->
+<div class="relative">
+<select class="appearance-none bg-surface-container-high border-0 rounded-xl px-4 pr-10 py-2.5 text-sm font-medium text-on-surface focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer">
+<option>All Types</option>
+<option>Income</option>
+<option>Expenses</option>
+<option>Transfers</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline text-lg">expand_more</span>
+</div>
+<!-- Add New Button -->
+<button class="bg-gradient-to-r from-primary to-secondary text-on-primary font-bold px-6 py-2.5 rounded-xl flex items-center gap-2 primary-glow hover:scale-[1.02] transition-transform active:scale-95">
+<span class="material-symbols-outlined">add</span>
+<span class="font-label text-sm tracking-tight">Add New</span>
+</button>
+</div>
+</div>
+<!-- Transaction Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-separate border-spacing-y-4">
+<thead class="text-outline uppercase text-[10px] font-bold tracking-[0.1em]">
+<tr>
+<th class="pb-4 pl-6">Date</th>
+<th class="pb-4">Description</th>
+<th class="pb-4">Category</th>
+<th class="pb-4">Type</th>
+<th class="pb-4 text-right pr-6">Amount</th>
+<th class="pb-4 text-right pr-6">Actions</th>
+</tr>
+</thead>
+<tbody>
+<!-- Row 1 -->
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-high/60 transition-colors group">
+<td class="py-5 pl-6 rounded-l-2xl text-on-surface-variant font-medium text-sm">Oct 24, 2023</td>
+<td class="py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+</div>
+<span class="font-bold text-on-surface">Apple Store Soho</span>
+</div>
+</td>
+<td class="py-5">
+<span class="text-sm text-on-surface-variant">Technology</span>
+</td>
+<td class="py-5">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-error/10 text-error border border-error/20">Expense</span>
+</td>
+<td class="py-5 text-right pr-6 font-bold font-headline text-on-surface">
+                                    -$1,299.00
+                                </td>
+<td class="py-5 text-right pr-6 rounded-r-2xl">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg hover:bg-primary/10 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-error/10 text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-high/60 transition-colors group">
+<td class="py-5 pl-6 rounded-l-2xl text-on-surface-variant font-medium text-sm">Oct 22, 2023</td>
+<td class="py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">payments</span>
+</div>
+<span class="font-bold text-on-surface">Remote Freelance Project</span>
+</div>
+</td>
+<td class="py-5">
+<span class="text-sm text-on-surface-variant">Income</span>
+</td>
+<td class="py-5">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-tertiary/10 text-tertiary border border-tertiary/20">Income</span>
+</td>
+<td class="py-5 text-right pr-6 font-bold font-headline text-tertiary">
+                                    +$4,500.00
+                                </td>
+<td class="py-5 text-right pr-6 rounded-r-2xl">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg hover:bg-primary/10 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-error/10 text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-high/60 transition-colors group">
+<td class="py-5 pl-6 rounded-l-2xl text-on-surface-variant font-medium text-sm">Oct 20, 2023</td>
+<td class="py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">restaurant</span>
+</div>
+<span class="font-bold text-on-surface">The Alchemist Brasserie</span>
+</div>
+</td>
+<td class="py-5">
+<span class="text-sm text-on-surface-variant">Dining</span>
+</td>
+<td class="py-5">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-error/10 text-error border border-error/20">Expense</span>
+</td>
+<td class="py-5 text-right pr-6 font-bold font-headline text-on-surface">
+                                    -$245.50
+                                </td>
+<td class="py-5 text-right pr-6 rounded-r-2xl">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg hover:bg-primary/10 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-error/10 text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-high/60 transition-colors group">
+<td class="py-5 pl-6 rounded-l-2xl text-on-surface-variant font-medium text-sm">Oct 19, 2023</td>
+<td class="py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">flight</span>
+</div>
+<span class="font-bold text-on-surface">Lufthansa Airways</span>
+</div>
+</td>
+<td class="py-5">
+<span class="text-sm text-on-surface-variant">Travel</span>
+</td>
+<td class="py-5">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-error/10 text-error border border-error/20">Expense</span>
+</td>
+<td class="py-5 text-right pr-6 font-bold font-headline text-on-surface">
+                                    -$840.00
+                                </td>
+<td class="py-5 text-right pr-6 rounded-r-2xl">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg hover:bg-primary/10 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-error/10 text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-high/60 transition-colors group">
+<td class="py-5 pl-6 rounded-l-2xl text-on-surface-variant font-medium text-sm">Oct 18, 2023</td>
+<td class="py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">show_chart</span>
+</div>
+<span class="font-bold text-on-surface">Dividend Payout - TSLA</span>
+</div>
+</td>
+<td class="py-5">
+<span class="text-sm text-on-surface-variant">Investments</span>
+</td>
+<td class="py-5">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-tertiary/10 text-tertiary border border-tertiary/20">Income</span>
+</td>
+<td class="py-5 text-right pr-6 font-bold font-headline text-tertiary">
+                                    +$112.45
+                                </td>
+<td class="py-5 text-right pr-6 rounded-r-2xl">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg hover:bg-primary/10 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-error/10 text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination -->
+<div class="mt-8 flex items-center justify-between border-t border-outline-variant/10 pt-6">
+<span class="text-sm text-outline font-medium">Showing 1 to 5 of 124 transactions</span>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-high text-outline hover:bg-surface-bright transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-high text-outline hover:bg-surface-bright transition-all">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-high text-outline hover:bg-surface-bright transition-all">3</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-high text-outline hover:bg-surface-bright transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Secondary Bento Cluster for Transaction Stats -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Stat Card 1 -->
+<div class="glass-panel p-6 rounded-2xl flex flex-col justify-between group">
+<div class="flex items-center justify-between">
+<span class="text-[10px] uppercase font-bold tracking-widest text-outline">Net Monthly Flow</span>
+<span class="material-symbols-outlined text-tertiary">trending_up</span>
+</div>
+<div class="mt-4">
+<h3 class="text-2xl font-black font-headline text-on-surface">+$8,420.00</h3>
+<p class="text-xs text-tertiary mt-1">+12% vs last month</p>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="glass-panel p-6 rounded-2xl flex flex-col justify-between group">
+<div class="flex items-center justify-between">
+<span class="text-[10px] uppercase font-bold tracking-widest text-outline">Largest Category</span>
+<span class="material-symbols-outlined text-primary">pie_chart</span>
+</div>
+<div class="mt-4">
+<h3 class="text-2xl font-black font-headline text-on-surface">Real Estate</h3>
+<p class="text-xs text-outline mt-1">32% of total expenses</p>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="glass-panel p-6 rounded-2xl flex flex-col justify-between group">
+<div class="flex items-center justify-between">
+<span class="text-[10px] uppercase font-bold tracking-widest text-outline">Pending Verification</span>
+<span class="material-symbols-outlined text-secondary">verified_user</span>
+</div>
+<div class="mt-4">
+<h3 class="text-2xl font-black font-headline text-on-surface">03 <span class="text-sm font-medium text-outline">items</span></h3>
+<p class="text-xs text-outline mt-1">Review needed for Oct 24</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
